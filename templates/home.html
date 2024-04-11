@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Steganography Home</title>
+        <link rel="stylesheet" href="../static/css/home.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="../static/js/home.js" defer></script>
+    </head>
+
+    <body>
+        <main>
+            <nav>
+                <div class="nav-container sizer">
+                    <h1>Steganography</h1>
+                </div>
+            </nav>
+            <div class="container sizer">
+                <div class="options" id="imageOption">
+                    <span href="/encode">Image</span>
+                    <span href="/decode">Video</span>
+                </div>
+                <p id="optionText"></p>
+                <div class="options" id="encodeDecodeOptions" style="display: none;">
+                    <span href="/encode">Encode</span>
+                    <span href="/decode">Decode</span>
+                </div>
+                <p id="optionText2"></p>
+
+                <form id="uploadForm" action="/image/encode-result" method="POST" enctype="multipart/form-data">
+                    <div class="form-container">
+                        <div class="uploads">
+
+                            <div class="upload-options">
+                                <label for="dragDropInput">Choose an image:</label>
+                                <div class="drop-area" id="dropArea">
+                                    <p id="dragDropP">Drag and drop your image here or Select to Upload </p>
+                                    <input type="file" id="dragDropInput" name="dragDropInput" accept="image/*"
+                                        style="display: none;">
+                                </div>
+                            </div>
+                            <div class="data-container">
+                                <label for="secret-msg" id="label-msg">Enter you Secret Message: </label>
+                                <textarea type="text" placeholder="Your Secret" id="secret-msg"></textarea>
+                            </div>
+                        </div>
+                        <input type="submit" value="Upload" class="upload-btn">
+                    </div iv>
+                </form>
+
+                <div class="decode-btn">
+                    <a>Decode</a>
+                </div>
+
+                <div class="download-link">
+                    <!-- <a id="downloadLink" href="#" download="encoded_image.png">Download Encoded Image</a> -->
+                </div>
+
+            </div>
+            <footer class="footer">
+                <div class="footer-container sizer">
+                    <p>Done by Tharuneshwar S</p>
+                </div>
+            </footer>
+        </main>
+    </body>
+
+</html>
