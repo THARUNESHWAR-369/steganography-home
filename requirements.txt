@@ -18,3 +18,4 @@ Werkzeug
 wincertstore
 gunicorn
 cloudinary
+gunicorn
