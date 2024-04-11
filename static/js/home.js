@@ -39,7 +39,10 @@ $(document).ready(function () {
     $(".decode-btn").css("display", "flex");
 
     $("#secret-msg").attr("readonly", true);
-    $("#secret-msg").attr("placeholder", `Upload Encoded ${modeChoose} to Decode`);
+    $("#secret-msg").attr(
+      "placeholder",
+      `Upload Encoded ${modeChoose} to Decode`
+    );
     $("#label-msg").text("Decoded Secret Message:");
   }
 
@@ -203,6 +206,22 @@ $(document).ready(function () {
     console.log("Files:", files);
     if (files.length === 1 && files[0].type.startsWith("image/")) {
       fileInput.files = files;
+      // Update the label to show the name of the selected file
       dropArea.querySelector("p").textContent = files[0].name;
     } else {
-     
+      alert("Please select a single image file.");
+    }
+  }
+
+  // Optional: If you want to allow clicking on the drop area to trigger file input
+  dropArea.addEventListener("click", () => {
+    fileInput.click();
+  });
+
+  // Update the label when a file is selected using the file input
+  fileInput.addEventListener("change", () => {
+    if (fileInput.files.length === 1) {
+      dropArea.querySelector("p").textContent = fileInput.files[0].name;
+    }
+  });
+});
