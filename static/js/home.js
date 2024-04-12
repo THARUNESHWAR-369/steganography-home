@@ -63,16 +63,17 @@ $(document).ready(function () {
   function handleSubmit(event) {
     event.preventDefault();
 
+
     let formData = new FormData();
     let fileInput = document.getElementById("dragDropInput");
     let files = fileInput.files;
     let data = document.getElementById("secret-msg").value;
 
-    console.log(files[0].name.split('.'));
 
     if (files.length > 0 && data.length > 0) {
       formData.append("image", files[0]);
       formData.append("data", data);
+    $(".loader").show();
 
       $.ajax({
         url: $(this).attr("action"),
@@ -82,8 +83,9 @@ $(document).ready(function () {
         contentType: false,
         success: function (response) {
           // Handle success response
-          console.log("Success:", response);
           $(".download-link").css("display", "flex");
+
+          $(".loader").hide();
 
 
           // Get the encoded image data
@@ -93,7 +95,6 @@ $(document).ready(function () {
 
           let filename = response.filename + '.' + extension;
 
-          console.log(filename);
 
           $(".download-link").html(
             "<a href=data:image/gif;base64," +
@@ -105,10 +106,11 @@ $(document).ready(function () {
         },
         error: function (xhr, status, error) {
           // Handle error response
-          console.error("Error:", error);
+          $(".loader").hide();
         },
       });
     } else {
+      $(".loader").hide();
       if (files.length === 0 && data.length === 0) {
         alert("Please select an image file and enter the secret message.");
       } else {
@@ -143,14 +145,12 @@ $(document).ready(function () {
       contentType: false,
       success: function (response) {
         // Handle success response
-        console.log("Success:", response);
         $("#secret-msg").val(response.data);
 
         // You can update the UI or show the decoded data here
       },
       error: function (xhr, status, error) {
         // Handle error response
-        console.error("Error:", error);
       },
     });
   }
@@ -236,7 +236,6 @@ $(document).ready(function () {
   }
 
   function handleFiles(files) {
-    console.log("Files:", files);
     if (files.length === 1 && files[0].type.startsWith("image/")) {
       fileInput.files = files;
       // Update the label to show the name of the selected file

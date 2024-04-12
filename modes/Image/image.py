@@ -25,10 +25,6 @@ def image_encode_result():
             flash("No image found")
             return redirect(request.url)
         
-        
-        print("files: ",request.files)
-        print("Data: ",request.form)
-
         file = request.files["image"]
 
         if request.form["data"] == "":
@@ -47,12 +43,10 @@ def image_encode_result():
 
         img = Image.open(image_bytes)
 
-        print("Exec image processing...")
         try:
 
             encode = stepic.encode(img, bytes(data, encoding='utf-8'))
             
-            print("Encoded done..")
 
             img_byte_arr = BytesIO()
             encode.save(img_byte_arr, format='PNG')
@@ -61,7 +55,6 @@ def image_encode_result():
             return jsonify({"img": i, "status": True, "filename": file.filename})
 
         except Exception as e:
-            print(f"Error processing image: {str(e)}")
             return jsonify({"status": False})
 
     return render_template("home.html")
@@ -97,7 +90,6 @@ def image_decode_result():
             return jsonify({"data": decode, "status": True})
 
         except Exception as e:
-            print(f"Error processing image: {str(e)}")
             return jsonify({"status": False})
 
     return render_template("home.html")
