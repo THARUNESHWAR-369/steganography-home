@@ -50,7 +50,7 @@ def image_encode_result():
         print("Exec image processing...")
         try:
 
-            encode = stepic.encode(img, data)
+            encode = stepic.encode(img, bytes(data, encoding='utf-8'))
             
             print("Encoded done..")
 
