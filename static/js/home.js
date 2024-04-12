@@ -14,6 +14,9 @@ $(document).ready(function () {
   // Function to handle Encode mode
   function handleEncodeMode() {
     $(".upload-options").show();
+    $("#encodeDecodeOptions span:nth-child(1").removeClass("selected");
+    $("#encodeDecodeOptions span:nth-child(2").removeClass("selected");
+    $("#encodeDecodeOptions span:nth-child(1").addClass("selected");
     $("#uploadForm").attr("action", "/image/encode-result");
     $("#optionText2").html(`Selected: <b>Encode ${modeChoose}</b>`);
     optionChoose = "encode";
@@ -24,7 +27,10 @@ $(document).ready(function () {
 
     $("#secret-msg").attr("readonly", false);
     $("#secret-msg").attr("placeholder", `Your Secret`);
+    $("#secret-msg").val("");
+
     $("#label-msg").text("Enter you Secret Message:");
+    $(".download-link").hide();
   }
 
   // Function to handle Decode mode
@@ -32,6 +38,11 @@ $(document).ready(function () {
     $(".upload-options").show();
     $("#uploadForm").attr("action", "/image/decode-result");
     $("#optionText2").html(`Selected: <b>Decode ${modeChoose}</b>`);
+    $("#encodeDecodeOptions span:nth-child(1").removeClass("selected");
+    $("#encodeDecodeOptions span:nth-child(2").removeClass("selected");
+
+    $("#encodeDecodeOptions span:nth-child(2").addClass("selected");
+
     optionChoose = "decode";
 
     $(".data-container").css("display", "flex");
@@ -39,11 +50,13 @@ $(document).ready(function () {
     $(".decode-btn").css("display", "flex");
 
     $("#secret-msg").attr("readonly", true);
+    $("#secret-msg").val("");
     $("#secret-msg").attr(
       "placeholder",
       `Upload Encoded ${modeChoose} to Decode`
     );
     $("#label-msg").text("Decoded Secret Message:");
+    $(".download-link").hide();
   }
 
   // Function to handle form submission
@@ -55,39 +68,51 @@ $(document).ready(function () {
     let files = fileInput.files;
     let data = document.getElementById("secret-msg").value;
 
-    formData.append("image", files[0]);
-    formData.append("data", data);
+    if (files.length > 0 && data.length > 0) {
+      formData.append("image", files[0]);
+      formData.append("data", data);
 
-    $.ajax({
-      url: $(this).attr("action"),
-      type: "POST",
-      data: formData,
-      processData: false,
-      contentType: false,
-      success: function (response) {
-        // Handle success response
-        console.log("Success:", response);
-        $(".download-link").css("display", "flex");
+      $.ajax({
+        url: $(this).attr("action"),
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          // Handle success response
+          console.log("Success:", response);
+          $(".download-link").css("display", "flex");
 
-        // Get the encoded image data
-        let encodedImageData = response.img;
-        let filename = response.filename.replace(" ", "_");
+          // Get the encoded image data
+          let encodedImageData = response.img;
+          let filename = response.filename.replace(" ", "_");
 
-        console.log(filename);
+          console.log(filename);
 
-        $(".download-link").html(
-          "<a href=data:image/gif;base64," +
-            encodedImageData +
-            ' id="download-img-a-tag" target="_blank" download=' +
-            filename +
-            ">Download</a>"
-        );
-      },
-      error: function (xhr, status, error) {
-        // Handle error response
-        console.error("Error:", error);
-      },
-    });
+          $(".download-link").html(
+            "<a href=data:image/gif;base64," +
+              encodedImageData +
+              ' id="download-img-a-tag" target="_blank" download=' +
+              filename +
+              ">Download</a>"
+          );
+        },
+        error: function (xhr, status, error) {
+          // Handle error response
+          console.error("Error:", error);
+        },
+      });
+    } else {
+      if (files.length === 0 && data.length === 0) {
+        alert("Please select an image file and enter the secret message.");
+      } else {
+        if (files.length === 0) {
+          alert("Please select an image file.");
+        } else if (data.length === 0) {
+          alert("Please enter your secret message.");
+        }
+      }
+    }
   }
 
   // Function to handle Decode button click
@@ -125,28 +150,30 @@ $(document).ready(function () {
   }
 
   // Click event for "Image" span
-  $("#imageOption span:nth-child(1)").click(function () {
-    updateEncodeDecodeOptions("Encode", "Decode", "/encode", "/decode");
-    $(".options span").removeClass("selected");
-    $(this).addClass("selected");
-    modeChoose = "image";
-    $("#optionText").html(`Stegnograph <b>Image</b>`);
-    $("#dragDropP").html(
-      `Drag and drop your ${modeChoose} here or select it from your computer.`
-    );
-  });
+  $("#imageOption span:nth-child(1)")
+    .click(function () {
+      updateEncodeDecodeOptions("Encode", "Decode", "/encode", "/decode");
+      $(".options span").removeClass("selected");
+      $(this).addClass("selected");
+      modeChoose = "image";
+      $("#optionText").html(`Stegnograph <b>Image</b>`);
+      $("#dragDropP").html(
+        `Drag and drop your ${modeChoose} here or select it from your computer.`
+      );
+    })
+    .trigger("click");
 
-  // Click event for "Video" span
-  $("#imageOption span:nth-child(2)").click(function () {
-    updateEncodeDecodeOptions("Encode", "Decode", "/encode", "/decode");
-    $(".options span").removeClass("selected");
-    $(this).addClass("selected");
-    modeChoose = "video";
-    $("#optionText").html("Stegnograph <b>Video</b>");
-    $("#dragDropP").html(
-      `Drag and drop your ${modeChoose} here or select it from your computer.`
-    );
-  });
+  //   // Click event for "Video" span
+  //   $("#imageOption span:nth-child(2)").click(function () {
+  //     updateEncodeDecodeOptions("Encode", "Decode", "/encode", "/decode");
+  //     $(".options span").removeClass("selected");
+  //     $(this).addClass("selected");
+  //     modeChoose = "video";
+  //     $("#optionText").html("Stegnograph <b>Video</b>");
+  //     $("#dragDropP").html(
+  //       `Drag and drop your ${modeChoose} here or select it from your computer.`
+  //     );
+  //   });
 
   // Click event for "Encode" span
   $("#encodeDecodeOptions span:nth-child(1)").click(handleEncodeMode);
