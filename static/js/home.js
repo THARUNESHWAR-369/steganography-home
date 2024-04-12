@@ -68,6 +68,8 @@ $(document).ready(function () {
     let files = fileInput.files;
     let data = document.getElementById("secret-msg").value;
 
+    console.log(files[0].name.split('.'));
+
     if (files.length > 0 && data.length > 0) {
       formData.append("image", files[0]);
       formData.append("data", data);
@@ -86,7 +88,10 @@ $(document).ready(function () {
 
           // Get the encoded image data
           let encodedImageData = response.img;
-          let filename = files.name.replace(" ", "_");
+          let filenameList = files[0].name.split('.');
+          let extension = filenameList[filenameList.length - 1];
+
+          let filename = response.filename + '.' + extension;
 
           console.log(filename);
 
