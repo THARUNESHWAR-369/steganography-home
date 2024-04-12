@@ -17,3 +17,8 @@ __pycache__/*
 
 proj-py-stegohome/
 proj-py-stegohome/*
+
+node_modules/
+node_modules/*
+*/node_modules
+.vercel
