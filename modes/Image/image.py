@@ -24,6 +24,10 @@ def image_encode_result():
         if "image" not in request.files:
             flash("No image found")
             return redirect(request.url)
+        
+        
+        print("files: ",request.files)
+        print("Data: ",request.form)
 
         file = request.files["image"]
 
@@ -43,9 +47,12 @@ def image_encode_result():
 
         img = Image.open(image_bytes)
 
+        print("Exec image processing...")
         try:
 
             encode = stepic.encode(img, data)
+            
+            print("Encoded done..")
 
             img_byte_arr = BytesIO()
             encode.save(img_byte_arr, format='PNG')

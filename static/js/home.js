@@ -83,9 +83,10 @@ $(document).ready(function () {
           console.log("Success:", response);
           $(".download-link").css("display", "flex");
 
+
           // Get the encoded image data
           let encodedImageData = response.img;
-          let filename = response.filename.replace(" ", "_");
+          let filename = files.name.replace(" ", "_");
 
           console.log(filename);
 
