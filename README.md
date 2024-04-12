@@ -8,6 +8,21 @@
 
 ### This is a simple web application that allows users to encode and decode hidden messages in images using steganography.
 
+
+## Screnshoots
+#### Encoding
+> ![image](https://github.com/THARUNESHWAR-369/steganography-home/assets/84437531/9e51b394-5b3a-4640-80d5-7f8c15454e78)
+#### Upload Image and Type Secret Data
+> ![image](https://github.com/THARUNESHWAR-369/steganography-home/assets/84437531/d850cc96-028d-4214-9219-f7b7f8ef05cf)
+#### Click Upload Button
+> ![image](https://github.com/THARUNESHWAR-369/steganography-home/assets/84437531/70ffdd7d-c397-4667-8f28-1da7854f36e8)
+#### Downloaded Successfully
+> ![image](https://github.com/THARUNESHWAR-369/steganography-home/assets/84437531/f84906e0-c18a-4b9f-b09d-7fdbb8a4ccaa)
+> ![image](https://github.com/THARUNESHWAR-369/steganography-home/assets/84437531/0db4ff08-0d5f-42c4-bfff-5ab3cf75b30e)
+#### Decoded Image
+> ![image](https://github.com/THARUNESHWAR-369/steganography-home/assets/84437531/0ce847e3-c0cd-41b9-920a-12b01fedb0f2)
+
+
 ## Features
 1. Encode text messages into images
 2. Decode hidden messages from steganographed images
